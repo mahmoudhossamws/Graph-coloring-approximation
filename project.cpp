@@ -552,7 +552,7 @@ void generateHistogram(const vector<GraphInstance>& instances) {
 }
 
 int main() {
-    vector<GraphInstance> random_instances = generateInstances(10);
+    vector<GraphInstance> random_instances = generateInstances(10000);
     vector<GraphInstance> edge_instances = generateEdgeCases(random_instances.size() + 1);
     
     vector<GraphInstance> all_instances;
@@ -560,8 +560,10 @@ int main() {
     all_instances.insert(all_instances.end(), edge_instances.begin(), edge_instances.end());
     
     cout << "Total instances: " << all_instances.size() << endl;
-    
+    int counter=0;
     for (auto& instance : all_instances) {
+        cout<<counter<<endl;
+        counter++;
         instance.optimal_colors = solveExactColoring(instance.adjacency_list);
         instance.approx_colors = solveApproximateColoring(instance.adjacency_list);
         instance.ratio = (instance.approx_colors > 0) ? 
