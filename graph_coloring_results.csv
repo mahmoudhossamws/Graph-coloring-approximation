@@ -1,21 +1,21 @@
 instance_id,type,num_vertices,num_edges,optimal_colors,approx_colors,ratio,max_degree
-1,"Random: Medium sparse graph",15,23,3,3,1.0000,7
-2,"Random: Medium dense graph",10,46,4,4,1.0000,6
-3,"Random: Small sparse graph",10,59,3,3,1.0000,4
-4,"Random: Small sparse graph",8,69,3,3,1.0000,5
-5,"Random: Large sparse graph",24,92,3,3,1.0000,5
-6,"Random: Medium dense graph",13,131,4,5,1.2500,7
-7,"Random: Medium dense graph",15,188,5,6,1.2000,10
-8,"Random: Small dense graph",7,198,3,3,1.0000,4
-9,"Random: Medium balanced graph",25,302,5,6,1.2000,15
-10,"Random: Medium sparse graph",13,315,3,3,1.0000,4
+1,"Random: Medium balanced graph",15,37,4,4,1.0000,8
+2,"Random: Large sparse graph",15,10,2,2,1.0000,4
+3,"Random: Small dense graph",9,27,5,5,1.0000,7
+4,"Random: Small dense graph",5,6,3,3,1.0000,4
+5,"Random: Large sparse graph",16,16,2,3,1.5000,4
+6,"Random: Small sparse graph",10,7,2,2,1.0000,2
+7,"Random: Small dense graph",8,21,4,4,1.0000,7
+8,"Random: Large dense graph",17,43,4,4,1.0000,8
+9,"Random: Medium balanced graph",13,34,5,5,1.0000,9
+10,"Random: Medium sparse graph",16,20,3,3,1.0000,5
 11,"EDGE_CASE: Complete Graph",10,45,10,10,1.0000,9
-12,"EDGE_CASE: Bipartite Graph",20,145,2,2,1.0000,10
-13,"EDGE_CASE: Star Graph",15,159,2,2,1.0000,14
-14,"EDGE_CASE: Cycle Graph",15,174,3,3,1.0000,2
-15,"EDGE_CASE: Wheel Graph",15,202,3,3,1.0000,14
-16,"EDGE_CASE: Grid Graph",16,226,2,2,1.0000,4
-17,"EDGE_CASE: Sparse Random Graph",25,-875909155,3,3,1.0000,6
-18,"EDGE_CASE: Dense Random Graph",20,-875909006,9,10,1.1111,18
-19,"EDGE_CASE: Clique Chain",15,-205896781,5,5,1.0000,6
-20,"EDGE_CASE: Odd Cycle Plus",15,-205896766,3,3,1.0000,4
+12,"EDGE_CASE: Bipartite Graph",20,100,2,2,1.0000,10
+13,"EDGE_CASE: Star Graph",15,14,2,2,1.0000,14
+14,"EDGE_CASE: Cycle Graph",15,15,3,3,1.0000,2
+15,"EDGE_CASE: Wheel Graph",15,28,3,3,1.0000,14
+16,"EDGE_CASE: Grid Graph",16,24,2,2,1.0000,4
+17,"EDGE_CASE: Sparse Random Graph",17,24,3,3,1.0000,7
+18,"EDGE_CASE: Dense Random Graph",17,95,7,8,1.1429,15
+19,"EDGE_CASE: Clique Chain",15,32,5,5,1.0000,6
+20,"EDGE_CASE: Odd Cycle Plus",15,15,3,3,1.0000,4

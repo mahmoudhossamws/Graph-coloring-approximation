@@ -36,6 +36,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Complete Graph";
         instance.n = 10;
+        instance.m = 0; // Initialize edge count
         instance.m = instance.n * (instance.n - 1) / 2;
         instance.adjacency_list.resize(instance.n);
         
@@ -55,6 +56,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Bipartite Graph";
         instance.n = 20;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         // Create a bipartite graph with two sets of 10 vertices each
@@ -74,6 +76,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Star Graph";
         instance.n = 15;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         // Connect center (vertex 0) to all other vertices
@@ -91,6 +94,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Cycle Graph";
         instance.n = 15;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         for (int i = 0; i < instance.n; i++) {
@@ -107,6 +111,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Wheel Graph";
         instance.n = 15;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         // Connect center (vertex 0) to all other vertices
@@ -131,6 +136,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.type = "EDGE_CASE: Grid Graph";
         int grid_size = 4; // 4x4 grid
         instance.n = grid_size * grid_size;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         for (int i = 0; i < grid_size; i++) {
@@ -160,7 +166,8 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         GraphInstance instance;
         instance.id = id++;
         instance.type = "EDGE_CASE: Sparse Random Graph";
-        instance.n = 25;
+        instance.n = 17;  // Reduced from 25 to ensure n ≤ 25
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         mt19937 rng(generateRandomSeed());
@@ -192,7 +199,8 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         GraphInstance instance;
         instance.id = id++;
         instance.type = "EDGE_CASE: Dense Random Graph";
-        instance.n = 20;
+        instance.n = 17;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         mt19937 rng(generateRandomSeed());
@@ -218,6 +226,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         int clique_size = 5;
         int num_cliques = 3;
         instance.n = clique_size * num_cliques;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         // Create separate cliques
@@ -250,6 +259,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Odd Cycle Plus";
         instance.n = 15;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         // Create a cycle of length 5
@@ -282,15 +292,15 @@ vector<GraphInstance> generateInstances(int num_instances = 100) {
         string description;
     };
     
-    vector<InstanceType> instance_types = {
-        {5, 10, 0.3, "Small sparse graph"},
-        {10, 20, 0.2, "Medium sparse graph"},
-        {20, 30, 0.1, "Large sparse graph"},
-        {5, 10, 0.7, "Small dense graph"},
-        {10, 20, 0.5, "Medium dense graph"},
-        {20, 30, 0.3, "Large dense graph"},
-        {15, 25, 0.4, "Medium balanced graph"}
-    };
+   vector<InstanceType> instance_types = {
+    {5, 10, 0.3, "Small sparse graph"},
+    {10, 17, 0.2, "Medium sparse graph"},
+    {15, 17, 0.1, "Large sparse graph"},
+    {5, 10, 0.7, "Small dense graph"},
+    {10, 17, 0.5, "Medium dense graph"},
+    {15, 17, 0.3, "Large dense graph"},
+    {10, 17, 0.4, "Medium balanced graph"}
+};
     
     for (int i = 0; i < num_instances; i++) {
         uniform_int_distribution<int> type_dist(0, instance_types.size() - 1);
@@ -299,8 +309,9 @@ vector<GraphInstance> generateInstances(int num_instances = 100) {
         GraphInstance instance;
         instance.id = i + 1;
         instance.type = "Random: " + type.description;
+        instance.m = 0; // Initialize edge count
         
-        uniform_int_distribution<int> n_dist(type.min_vertices, type.max_vertices);
+        uniform_int_distribution<int> n_dist(type.min_vertices, min(type.max_vertices, 17));
         instance.n = n_dist(rng);
         instance.adjacency_list.resize(instance.n);
         
@@ -321,58 +332,106 @@ vector<GraphInstance> generateInstances(int num_instances = 100) {
     return instances;
 }
 
-// Exact coloring using backtracking
-bool isSafeToColor(vector<vector<int>>& graph, vector<int>& color, int vertex, int c) {
-    for (int neighbor : graph[vertex]) {
-        if (color[neighbor] == c) {
-            return false;
-        }
-    }
-    return true;
-}
-
-bool graphColoringUtil(vector<vector<int>>& graph, int m, vector<int>& color, int vertex) {
-    if (vertex == graph.size()) {
-        return true;
-    }
-    
-    for (int c = 1; c <= m; c++) {
-        if (isSafeToColor(graph, color, vertex, c)) {
-            color[vertex] = c;
-            
-            if (graphColoringUtil(graph, m, color, vertex + 1)) {
-                return true;
-            }
-            
-            color[vertex] = 0;
-        }
-    }
-    
-    return false;
-}
-
+// Exact coloring using bitmask DP
 int solveExactColoring(vector<vector<int>>& graph) {
     int n = graph.size();
     
-    // Try with increasing number of colors
-    for (int m = 1; m <= n; m++) {
-        vector<int> color(n, 0);
-        if (graphColoringUtil(graph, m, color, 0)) {
-            return m;
+    // For empty graph
+    if (n == 0) return 0;
+    
+    // For very small graphs, use simple approach
+    if (n <= 2) {
+        if (n == 1) return 1;
+        return (graph[0].size() > 0) ? 2 : 1;
+    }
+    
+    // Check if graph is bipartite
+    if (n <= 25) {
+        vector<int> color(n, -1);
+        bool is_bipartite = true;
+        
+        for (int start = 0; start < n && is_bipartite; start++) {
+            if (color[start] != -1) continue;
+            
+            queue<int> q;
+            q.push(start);
+            color[start] = 0;
+            
+            while (!q.empty() && is_bipartite) {
+                int u = q.front();
+                q.pop();
+                
+                for (int v : graph[u]) {
+                    if (color[v] == -1) {
+                        color[v] = 1 - color[u];
+                        q.push(v);
+                    } else if (color[v] == color[u]) {
+                        is_bipartite = false;
+                        break;
+                    }
+                }
+            }
+        }
+        
+        if (is_bipartite) return 2;
+    }
+    
+    // For larger graphs, use bitmask DP
+    if (n > 25) {
+        // Fallback to approximate for large graphs
+        return n;
+    }
+    
+    // Precompute adjacency bitmasks for faster checks
+    vector<int> adj_mask(n, 0);
+    for (int i = 0; i < n; i++) {
+        for (int j : graph[i]) {
+            adj_mask[i] |= (1 << j);
         }
     }
     
-    return n; // Worst case: one color per vertex
+    // DP[mask] = minimum number of colors needed to color the vertices in the mask
+    vector<int> dp(1 << n, INT_MAX);
+    dp[0] = 0; // Empty set needs 0 colors
+    
+    // Find all independent sets (potential color classes)
+    vector<int> independent_sets;
+    for (int mask = 1; mask < (1 << n); mask++) {
+        bool is_independent = true;
+        for (int i = 0; i < n && is_independent; i++) {
+            if (mask & (1 << i)) {
+                // Check if this vertex conflicts with any other vertex in the set
+                if (mask & adj_mask[i]) {
+                    is_independent = false;
+                }
+            }
+        }
+        if (is_independent) {
+            independent_sets.push_back(mask);
+        }
+    }
+    
+    // DP recurrence
+    for (int mask = 1; mask < (1 << n); mask++) {
+        // Try to color the remaining uncolored vertices
+        for (int indep : independent_sets) {
+            // Check if this independent set is applicable
+            if ((mask & indep) == indep) {
+                int remaining = mask ^ indep;
+                dp[mask] = min(dp[mask], dp[remaining] + 1);
+            }
+        }
+    }
+    
+    return dp[(1 << n) - 1]; // All vertices colored
 }
-
-
 
 int solveApproximateColoring(vector<vector<int>>& graph) {
     int n = graph.size();
     
     // Special case: Empty graph
     if (n == 0) return 0;
-
+    
     vector<int> color(n, -1);
     vector<int> order(n);
     iota(order.begin(), order.end(), 0);
