@@ -35,6 +35,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Complete Graph";
         instance.n = 10;
+        instance.m = 0; // Initialize edge count
         instance.m = instance.n * (instance.n - 1) / 2;
         instance.adjacency_list.resize(instance.n);
         
@@ -54,6 +55,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Bipartite Graph";
         instance.n = 20;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         // Create a bipartite graph with two sets of 10 vertices each
@@ -73,6 +75,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Star Graph";
         instance.n = 15;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         // Connect center (vertex 0) to all other vertices
@@ -90,6 +93,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Cycle Graph";
         instance.n = 15;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         for (int i = 0; i < instance.n; i++) {
@@ -106,6 +110,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Wheel Graph";
         instance.n = 15;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         // Connect center (vertex 0) to all other vertices
@@ -130,6 +135,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.type = "EDGE_CASE: Grid Graph";
         int grid_size = 4; // 4x4 grid
         instance.n = grid_size * grid_size;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         for (int i = 0; i < grid_size; i++) {
@@ -160,6 +166,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Sparse Random Graph";
         instance.n = 25;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         mt19937 rng(generateRandomSeed());
@@ -192,6 +199,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Dense Random Graph";
         instance.n = 20;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         mt19937 rng(generateRandomSeed());
@@ -217,6 +225,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         int clique_size = 5;
         int num_cliques = 3;
         instance.n = clique_size * num_cliques;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         // Create separate cliques
@@ -249,6 +258,7 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Odd Cycle Plus";
         instance.n = 15;
+        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         // Create a cycle of length 5
@@ -298,6 +308,7 @@ vector<GraphInstance> generateInstances(int num_instances = 100) {
         GraphInstance instance;
         instance.id = i + 1;
         instance.type = "Random: " + type.description;
+        instance.m = 0; // Initialize edge count
         
         uniform_int_distribution<int> n_dist(type.min_vertices, type.max_vertices);
         instance.n = n_dist(rng);
@@ -364,168 +375,9 @@ int solveExactColoring(vector<vector<int>>& graph) {
     return n; // Worst case: one color per vertex
 }
 
-// Greedy coloring
-int solveGreedyColoring(vector<vector<int>>& graph) {
-    int n = graph.size();
-    vector<int> color(n, -1);
-    
-    // Assign the first color to first vertex
-    color[0] = 0;
-    
-    // Initialize available colors
-    vector<bool> available(n, true);
-    
-    // Assign colors to remaining vertices
-    for (int u = 1; u < n; u++) {
-        // Process all adjacent vertices and mark their colors as unavailable
-        for (int v : graph[u]) {
-            if (color[v] != -1) {
-                available[color[v]] = false;
-            }
-        }
-        
-        // Find the first available color
-        int cr;
-        for (cr = 0; cr < n; cr++) {
-            if (available[cr]) {
-                break;
-            }
-        }
-        
-        // Assign the found color
-        color[u] = cr;
-        
-        // Reset the available array for the next iteration
-        for (int v : graph[u]) {
-            if (color[v] != -1) {
-                available[color[v]] = true;
-            }
-        }
-    }
-    
-    // Find the maximum color used
-    int max_color = 0;
-    for (int c : color) {
-        max_color = max(max_color, c);
-    }
-    
-    return max_color + 1; // +1 because colors start from 0
-}
-
-// Welsh-Powell algorithm (degree-based greedy)
-int solveWelshPowell(vector<vector<int>>& graph) {
-    int n = graph.size();
-    vector<int> color(n, -1);
-    
-    // Calculate degrees
-    vector<pair<int, int>> degrees(n);
-    for (int i = 0; i < n; i++) {
-        degrees[i] = {graph[i].size(), i};
-    }
-    
-    // Sort vertices by degree in descending order
-    sort(degrees.begin(), degrees.end(), greater<pair<int, int>>());
-    
-    // Color vertices
-    for (int i = 0; i < n; i++) {
-        int u = degrees[i].second;
-        
-        // Skip if already colored
-        if (color[u] != -1) continue;
-        
-        // Find the lowest available color
-        vector<bool> used(n, false);
-        for (int v : graph[u]) {
-            if (color[v] != -1) {
-                used[color[v]] = true;
-            }
-        }
-        
-        int c = 0;
-        while (c < n && used[c]) c++;
-        
-        color[u] = c;
-        
-        // Try to color other vertices with the same color
-        for (int j = i + 1; j < n; j++) {
-            int v = degrees[j].second;
-            
-            if (color[v] != -1) continue;
-            
-            bool can_color = true;
-            for (int w : graph[v]) {
-                if (color[w] == c) {
-                    can_color = false;
-                    break;
-                }
-            }
-            
-            if (can_color) {
-                color[v] = c;
-            }
-        }
-    }
-    
-    // Find the maximum color used
-    int max_color = 0;
-    for (int c : color) {
-        max_color = max(max_color, c);
-    }
-    
-    return max_color + 1; // +1 because colors start from 0
-}
-
-// Bipartite graph coloring (special case)
-bool isBipartite(vector<vector<int>>& graph) {
-    int n = graph.size();
-    vector<int> color(n, -1);
-    
-    for (int start = 0; start < n; start++) {
-        if (color[start] != -1) continue;
-        
-        queue<int> q;
-        q.push(start);
-        color[start] = 0;
-        
-        while (!q.empty()) {
-            int u = q.front();
-            q.pop();
-            
-            for (int v : graph[u]) {
-                if (color[v] == -1) {
-                    color[v] = 1 - color[u];
-                    q.push(v);
-                } else if (color[v] == color[u]) {
-                    return false;
-                }
-            }
-        }
-    }
-    
-    return true;
-}
 
 int solveApproximateColoring(vector<vector<int>>& graph) {
-    int n = graph.size();
-    
-    // Special case: Empty graph
-    if (n == 0) return 0;
-    
-    // Special case: Bipartite graph
-    if (isBipartite(graph)) {
-        return 2;
-    }
-    
-    // For small graphs, try exact coloring
-    if (n <= 15) {
-        return solveExactColoring(graph);
-    }
-    
-    // For larger graphs, use both greedy and Welsh-Powell and take the better result
-    int greedy_colors = solveGreedyColoring(graph);
-    int wp_colors = solveWelshPowell(graph);
-    
-    return min(greedy_colors, wp_colors);
+ return 0;
 }
 
 void saveToCSV(const vector<GraphInstance>& instances, const string& filename) {
