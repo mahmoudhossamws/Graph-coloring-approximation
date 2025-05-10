@@ -1,111 +1,21 @@
 instance_id,type,num_vertices,num_edges,optimal_colors,approx_colors,ratio,max_degree
-1,"Random: Large sparse graph",26,26,3,0,9999.9999,5
-2,"Random: Large sparse graph",24,22,3,0,9999.9999,4
-3,"Random: Small dense graph",10,32,5,0,9999.9999,8
-4,"Random: Large dense graph",23,74,4,0,9999.9999,10
-5,"Random: Small dense graph",6,7,3,0,9999.9999,3
-6,"Random: Large sparse graph",28,38,3,0,9999.9999,6
-7,"Random: Medium dense graph",15,56,5,0,9999.9999,10
-8,"Random: Medium dense graph",19,84,6,0,9999.9999,13
-9,"Random: Medium dense graph",14,41,4,0,9999.9999,8
-10,"Random: Large sparse graph",26,35,3,0,9999.9999,6
-11,"Random: Medium dense graph",14,45,4,0,9999.9999,8
-12,"Random: Small dense graph",9,28,6,0,9999.9999,8
-13,"Random: Large dense graph",24,90,5,0,9999.9999,13
-14,"Random: Small dense graph",10,30,4,0,9999.9999,8
-15,"Random: Large dense graph",28,113,5,0,9999.9999,13
-16,"Random: Small dense graph",5,5,2,0,9999.9999,3
-17,"Random: Medium balanced graph",22,100,5,0,9999.9999,15
-18,"Random: Large sparse graph",30,37,3,0,9999.9999,6
-19,"Random: Large sparse graph",28,37,3,0,9999.9999,5
-20,"Random: Small sparse graph",9,10,3,0,9999.9999,4
-21,"Random: Large sparse graph",27,34,3,0,9999.9999,6
-22,"Random: Large dense graph",24,93,5,0,9999.9999,13
-23,"Random: Large sparse graph",28,31,3,0,9999.9999,6
-24,"Random: Small sparse graph",6,5,2,0,9999.9999,3
-25,"Random: Medium balanced graph",20,84,6,0,9999.9999,12
-26,"Random: Small dense graph",6,12,5,0,9999.9999,5
-27,"Random: Medium balanced graph",17,56,4,0,9999.9999,9
-28,"Random: Small sparse graph",8,10,2,0,9999.9999,4
-29,"Random: Large dense graph",23,73,5,0,9999.9999,12
-30,"Random: Large sparse graph",25,23,3,0,9999.9999,6
-31,"Random: Medium sparse graph",15,19,3,0,9999.9999,5
-32,"Random: Medium sparse graph",16,22,4,0,9999.9999,5
-33,"Random: Large dense graph",22,63,4,0,9999.9999,9
-34,"Random: Large sparse graph",27,34,3,0,9999.9999,6
-35,"Random: Large sparse graph",25,32,3,0,9999.9999,6
-36,"Random: Large dense graph",24,75,4,0,9999.9999,11
-37,"Random: Medium balanced graph",24,116,6,0,9999.9999,13
-38,"Random: Small dense graph",10,29,5,0,9999.9999,7
-39,"Random: Large dense graph",20,58,4,0,9999.9999,10
-40,"Random: Small dense graph",9,26,5,0,9999.9999,8
-41,"Random: Medium balanced graph",19,63,5,0,9999.9999,11
-42,"Random: Small dense graph",8,23,5,0,9999.9999,7
-43,"Random: Medium dense graph",13,47,6,0,9999.9999,9
-44,"Random: Small sparse graph",7,6,2,0,9999.9999,3
-45,"Random: Small dense graph",6,9,3,0,9999.9999,4
-46,"Random: Large sparse graph",29,39,3,0,9999.9999,6
-47,"Random: Medium dense graph",12,32,5,0,9999.9999,8
-48,"Random: Small sparse graph",10,10,3,0,9999.9999,4
-49,"Random: Medium sparse graph",16,27,3,0,9999.9999,6
-50,"Random: Large dense graph",22,62,4,0,9999.9999,9
-51,"Random: Small sparse graph",8,4,2,0,9999.9999,3
-52,"Random: Large sparse graph",27,40,3,0,9999.9999,7
-53,"Random: Medium balanced graph",18,62,5,0,9999.9999,11
-54,"Random: Large dense graph",29,128,5,0,9999.9999,12
-55,"Random: Medium dense graph",16,55,5,0,9999.9999,11
-56,"Random: Small sparse graph",5,2,2,0,9999.9999,2
-57,"Random: Large dense graph",26,97,4,0,9999.9999,12
-58,"Random: Small dense graph",10,34,6,0,9999.9999,8
-59,"Random: Large sparse graph",20,18,3,0,9999.9999,5
-60,"Random: Medium balanced graph",16,55,4,0,9999.9999,10
-61,"Random: Large sparse graph",20,20,3,0,9999.9999,5
-62,"Random: Medium dense graph",13,36,4,0,9999.9999,8
-63,"Random: Medium balanced graph",19,71,5,0,9999.9999,11
-64,"Random: Small sparse graph",9,7,2,0,9999.9999,3
-65,"Random: Large dense graph",30,139,5,0,9999.9999,14
-66,"Random: Medium balanced graph",15,41,4,0,9999.9999,8
-67,"Random: Large sparse graph",22,16,2,0,9999.9999,4
-68,"Random: Medium sparse graph",19,34,3,0,9999.9999,7
-69,"Random: Medium dense graph",13,47,5,0,9999.9999,10
-70,"Random: Medium dense graph",10,22,4,0,9999.9999,6
-71,"Random: Large sparse graph",21,28,3,0,9999.9999,5
-72,"Random: Small dense graph",9,24,5,0,9999.9999,8
-73,"Random: Large sparse graph",20,23,3,0,9999.9999,5
-74,"Random: Small dense graph",8,20,4,0,9999.9999,6
-75,"Random: Large dense graph",24,87,4,0,9999.9999,11
-76,"Random: Large dense graph",25,94,5,0,9999.9999,12
-77,"Random: Medium dense graph",10,18,3,0,9999.9999,5
-78,"Random: Medium sparse graph",16,29,4,0,9999.9999,5
-79,"Random: Medium sparse graph",11,11,3,0,9999.9999,5
-80,"Random: Large dense graph",26,98,5,0,9999.9999,14
-81,"Random: Medium balanced graph",19,61,4,0,9999.9999,11
-82,"Random: Large sparse graph",28,38,3,0,9999.9999,8
-83,"Random: Medium balanced graph",24,114,6,0,9999.9999,13
-84,"Random: Large sparse graph",20,18,3,0,9999.9999,4
-85,"Random: Medium sparse graph",14,21,3,0,9999.9999,6
-86,"Random: Large sparse graph",25,38,3,0,9999.9999,6
-87,"Random: Medium sparse graph",19,31,3,0,9999.9999,8
-88,"Random: Medium balanced graph",20,71,5,0,9999.9999,11
-89,"Random: Large dense graph",29,130,5,0,9999.9999,18
-90,"Random: Small sparse graph",7,9,3,0,9999.9999,4
-91,"Random: Medium sparse graph",10,10,3,0,9999.9999,5
-92,"Random: Medium dense graph",14,53,5,0,9999.9999,10
-93,"Random: Medium dense graph",14,54,5,0,9999.9999,10
-94,"Random: Medium dense graph",17,64,5,0,9999.9999,10
-95,"Random: Small sparse graph",9,13,3,0,9999.9999,5
-96,"Random: Medium sparse graph",14,20,3,0,9999.9999,5
-97,"Random: Medium dense graph",20,102,6,0,9999.9999,15
-98,"Random: Large sparse graph",29,45,3,0,9999.9999,7
-99,"Random: Medium balanced graph",20,85,5,0,9999.9999,12
-100,"Random: Medium sparse graph",12,20,4,0,9999.9999,6
-101,"EDGE_CASE: Complete Graph",10,45,10,0,9999.9999,9
-102,"EDGE_CASE: Bipartite Graph",20,100,2,0,9999.9999,10
-103,"EDGE_CASE: Star Graph",15,14,2,0,9999.9999,14
-104,"EDGE_CASE: Cycle Graph",15,15,3,0,9999.9999,2
-105,"EDGE_CASE: Wheel Graph",15,28,3,0,9999.9999,14
-106,"EDGE_CASE: Grid Graph",16,24,2,0,9999.9999,4
-107,"EDGE_CASE: Sparse Random Graph",25,33,3,0,9999.9999,6
-108,"EDGE_CASE: Dense Random Graph",20,121,8,0,9999.9999,15
-109,"EDGE_CASE: Clique Chain",15,32,5,0,9999.9999,6
-110,"EDGE_CASE: Odd Cycle Plus",15,15,3,0,9999.9999,4
+1,"Random: Medium sparse graph",15,23,3,3,1.0000,7
+2,"Random: Medium dense graph",10,46,4,4,1.0000,6
+3,"Random: Small sparse graph",10,59,3,3,1.0000,4
+4,"Random: Small sparse graph",8,69,3,3,1.0000,5
+5,"Random: Large sparse graph",24,92,3,3,1.0000,5
+6,"Random: Medium dense graph",13,131,4,5,1.2500,7
+7,"Random: Medium dense graph",15,188,5,6,1.2000,10
+8,"Random: Small dense graph",7,198,3,3,1.0000,4
+9,"Random: Medium balanced graph",25,302,5,6,1.2000,15
+10,"Random: Medium sparse graph",13,315,3,3,1.0000,4
+11,"EDGE_CASE: Complete Graph",10,45,10,10,1.0000,9
+12,"EDGE_CASE: Bipartite Graph",20,145,2,2,1.0000,10
+13,"EDGE_CASE: Star Graph",15,159,2,2,1.0000,14
+14,"EDGE_CASE: Cycle Graph",15,174,3,3,1.0000,2
+15,"EDGE_CASE: Wheel Graph",15,202,3,3,1.0000,14
+16,"EDGE_CASE: Grid Graph",16,226,2,2,1.0000,4
+17,"EDGE_CASE: Sparse Random Graph",25,-875909155,3,3,1.0000,6
+18,"EDGE_CASE: Dense Random Graph",20,-875909006,9,10,1.1111,18
+19,"EDGE_CASE: Clique Chain",15,-205896781,5,5,1.0000,6
+20,"EDGE_CASE: Odd Cycle Plus",15,-205896766,3,3,1.0000,4

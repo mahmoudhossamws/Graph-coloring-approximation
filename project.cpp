@@ -8,6 +8,7 @@
 #include <chrono>
 #include <string>
 #include <map>
+#include <set>
 #include <queue>
 using namespace std;
 
@@ -35,7 +36,6 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Complete Graph";
         instance.n = 10;
-        instance.m = 0; // Initialize edge count
         instance.m = instance.n * (instance.n - 1) / 2;
         instance.adjacency_list.resize(instance.n);
         
@@ -55,7 +55,6 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Bipartite Graph";
         instance.n = 20;
-        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         // Create a bipartite graph with two sets of 10 vertices each
@@ -75,7 +74,6 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Star Graph";
         instance.n = 15;
-        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         // Connect center (vertex 0) to all other vertices
@@ -93,7 +91,6 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Cycle Graph";
         instance.n = 15;
-        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         for (int i = 0; i < instance.n; i++) {
@@ -110,7 +107,6 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Wheel Graph";
         instance.n = 15;
-        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         // Connect center (vertex 0) to all other vertices
@@ -135,7 +131,6 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.type = "EDGE_CASE: Grid Graph";
         int grid_size = 4; // 4x4 grid
         instance.n = grid_size * grid_size;
-        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         for (int i = 0; i < grid_size; i++) {
@@ -166,7 +161,6 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Sparse Random Graph";
         instance.n = 25;
-        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         mt19937 rng(generateRandomSeed());
@@ -199,7 +193,6 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Dense Random Graph";
         instance.n = 20;
-        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         mt19937 rng(generateRandomSeed());
@@ -225,7 +218,6 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         int clique_size = 5;
         int num_cliques = 3;
         instance.n = clique_size * num_cliques;
-        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         // Create separate cliques
@@ -258,7 +250,6 @@ vector<GraphInstance> generateEdgeCases(int start_id = 1) {
         instance.id = id++;
         instance.type = "EDGE_CASE: Odd Cycle Plus";
         instance.n = 15;
-        instance.m = 0; // Initialize edge count
         instance.adjacency_list.resize(instance.n);
         
         // Create a cycle of length 5
@@ -308,7 +299,6 @@ vector<GraphInstance> generateInstances(int num_instances = 100) {
         GraphInstance instance;
         instance.id = i + 1;
         instance.type = "Random: " + type.description;
-        instance.m = 0; // Initialize edge count
         
         uniform_int_distribution<int> n_dist(type.min_vertices, type.max_vertices);
         instance.n = n_dist(rng);
@@ -376,8 +366,30 @@ int solveExactColoring(vector<vector<int>>& graph) {
 }
 
 
+
 int solveApproximateColoring(vector<vector<int>>& graph) {
- return 0;
+    int n = graph.size();
+    
+    // Special case: Empty graph
+    if (n == 0) return 0;
+
+    vector<int> color(n, -1);
+    vector<int> order(n);
+    iota(order.begin(), order.end(), 0);
+    sort(order.begin(), order.end(), [&](int u, int v) {
+        return graph[u].size() > graph[v].size();
+    });
+
+    for(int u : order){
+        set<int> used;
+        for (int v : graph[u])
+            if (color[v] != -1) used.insert(color[v]);
+        int c = 0;
+        while (used.count(c)) c++;
+        color[u] = c;
+    }
+
+    return *max_element(color.begin(), color.end()) + 1;
 }
 
 void saveToCSV(const vector<GraphInstance>& instances, const string& filename) {
@@ -481,7 +493,7 @@ void generateHistogram(const vector<GraphInstance>& instances) {
 }
 
 int main() {
-    vector<GraphInstance> random_instances = generateInstances(100);
+    vector<GraphInstance> random_instances = generateInstances(10);
     vector<GraphInstance> edge_instances = generateEdgeCases(random_instances.size() + 1);
     
     vector<GraphInstance> all_instances;
